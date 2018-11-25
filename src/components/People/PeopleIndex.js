@@ -25,6 +25,16 @@ class PeopleIndex extends React.Component {
         })
     }
 
+    addPerson = (person) => {
+        this.setState( prevState => {
+            let people = prevState.people.slice();
+            people.push(person);
+            return {
+                people
+            }
+        });
+    };
+
     render() {
         const {people = [], fetch} = this.state;
 
@@ -53,7 +63,10 @@ class PeopleIndex extends React.Component {
                             ))}
                         </div>
                 }
-                <AddPersonContainer people={this.state.people}/>
+                <AddPersonContainer
+                    people={this.state.people}
+                    addPerson={this.addPerson}
+                />
             </React.Fragment>
         );
     }
