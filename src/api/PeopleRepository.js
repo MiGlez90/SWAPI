@@ -1,53 +1,63 @@
-import * as fireStoreFunctions from "./FirestoreBaseAPI";
+import {FirestoreFunctions} from "./FirestoreBaseAPI";
 
-const collectionName = "people";
+export const PeopleRepository = (function () {
 
-const getFilm = (docRef) => {
-    return docRef.get()
-        .then( doc => {
-            return Promise.resolve({id: doc.id, ...doc.data()})
-        })
-        .catch( Promise.reject );
-};
+    const collectionName = "people";
 
-export const getPeople = () => {
-    return fireStoreFunctions.get(collectionName)
-        .then( people => {
-           if( people ){
-               let peoplePromises = [];
-               people.forEach( person => {
-                   peoplePromises.push( new Promise( (resolve, reject) => {
-                       if( person.films){
-                           let filmsPromises = person.films.map( getFilm );
-                           Promise.all(filmsPromises)
-                               .then( films => {
-                                   console.log(films);
-                                   person.films = films;
-                                   resolve(person)
-                               })
-                               .catch( reject )
-                       }
-                   }));
-               });
-               return Promise.all( peoplePromises )
-                   .then( people => {
-                       console.log(people);
-                       return Promise.resolve(people);
-                   })
-                   .catch( console.error )
-           }
-        })
-        .catch( console.error );
-};
+    const getFilm = (docRef) => {
+        return docRef.get()
+            .then(doc => {
+                return Promise.resolve({id: doc.id, ...doc.data()})
+            })
+            .catch(Promise.reject);
+    };
 
-export const getPerson = (idPerson) => {
-    return fireStoreFunctions.getById(collectionName, idPerson);
-};
+    const getPeople = () => {
+        return FirestoreFunctions.get(collectionName)
+            .then(people => {
+                if (people) {
+                    let peoplePromises = [];
+                    people.forEach(person => {
+                        peoplePromises.push(new Promise((resolve, reject) => {
+                            if (person.films) {
+                                let filmsPromises = person.films.map(getFilm);
+                                Promise.all(filmsPromises)
+                                    .then(films => {
+                                        console.log(films);
+                                        person.films = films;
+                                        resolve(person)
+                                    })
+                                    .catch(reject)
+                            }
+                        }));
+                    });
+                    return Promise.all(peoplePromises)
+                        .then(people => {
+                            console.log(people);
+                            return Promise.resolve(people);
+                        })
+                        .catch(console.error)
+                }
+            })
+            .catch(console.error);
+    };
 
-export const addPerson = (document) => {
-    return fireStoreFunctions.add(collectionName, document);
-};
+    const getPerson = (idPerson) => {
+        return FirestoreFunctions.getById(collectionName, idPerson);
+    };
 
-export const updatePerson = (idPerson, document) => {
-    return fireStoreFunctions.patch(collectionName, idPerson, document);
-};
+    const addPerson = (document) => {
+        return FirestoreFunctions.add(collectionName, document);
+    };
+
+    const updatePerson = (idPerson, document) => {
+        return FirestoreFunctions.patch(collectionName, idPerson, document);
+    };
+
+    return {
+        getPeople,
+        getPerson,
+        addPerson,
+        updatePerson
+    }
+})();
