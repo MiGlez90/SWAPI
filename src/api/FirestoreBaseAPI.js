@@ -38,7 +38,12 @@ export const FirestoreFunctions = (function () {
         return new Promise((resolve, reject) => {
             db.collection(collectionName).add(document)
                 .then(function (docRef) {
-                    resolve(docRef)
+                    docRef.get()
+                        .then(document => {
+                            let documentFormatted = {id: document.id, ...document.data()};
+                            resolve(documentFormatted);
+                        })
+                        .catch(reject);
                 })
                 .catch(function (error) {
                     reject(error);

@@ -28,6 +28,8 @@ export const PeopleRepository = (function () {
                                         resolve(person)
                                     })
                                     .catch(reject)
+                            }else {
+                                resolve(person)
                             }
                         }));
                     });
