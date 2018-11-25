@@ -47,7 +47,11 @@ class PeopleIndex extends React.Component {
                                 {
                                     row.map(person => (
                                         <div className="col-md-4">
-                                            <Card title={person.name} text={person.gender}/>
+                                            <Card
+                                                title={person.name}
+                                                text={person.gender}
+                                                anchor={{link: person.id, label: "Detalle"}}
+                                            />
                                         </div>
                                     ))
                                 }

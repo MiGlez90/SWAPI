@@ -3,6 +3,12 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.btn-starwars {
+  color: white;
+  background-color: black;
+  border-color: #FFE61E;
+}
+
 .App {
   text-align: center;
 }
