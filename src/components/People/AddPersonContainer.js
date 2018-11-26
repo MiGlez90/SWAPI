@@ -5,7 +5,6 @@ import {PeopleRepository} from "../../api/PeopleRepository";
 import {PlanetsRepository} from "../../api/PlanetsRepository";
 import {FirestoreFunctions} from "../../api/FirestoreBaseAPI";
 import db from "../../api/Firestore";
-import {response} from "./temp";
 
 class AddPersonContainer extends Component {
     constructor(props) {
