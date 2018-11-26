@@ -35,21 +35,21 @@ class AddPersonContainer extends Component {
             .catch(console.error)
     }
 
-    temp = () => {
-        let results = response;
-
-        const promises = [];
-        for (let doc of results) {
-            doc.films = doc.films.map(film => db.doc(film));
-            doc.species = doc.species.map(specie => db.doc(specie));
-            doc.vehicles = doc.vehicles.map(vehicle => db.doc(vehicle));
-            doc.starships = doc.starships.map(starship => db.doc(starship));
-            doc.homeworld = db.doc(doc.homeworld);
-            promises.push(FirestoreFunctions.put("people", doc.id, doc));
-        }
-
-        Promise.all(promises).then(result => console.log(result)).catch(e => console.error(e))
-    };
+    // temp = () => {
+    //     let results = response;
+    //
+    //     const promises = [];
+    //     for (let doc of results) {
+    //         doc.films = doc.films.map(film => db.doc(film));
+    //         doc.species = doc.species.map(specie => db.doc(specie));
+    //         doc.vehicles = doc.vehicles.map(vehicle => db.doc(vehicle));
+    //         doc.starships = doc.starships.map(starship => db.doc(starship));
+    //         doc.homeworld = db.doc(doc.homeworld);
+    //         promises.push(FirestoreFunctions.put("people", doc.id, doc));
+    //     }
+    //
+    //     Promise.all(promises).then(result => console.log(result)).catch(e => console.error(e))
+    // };
 
     onSubmit = (e) => {
         e.preventDefault();
