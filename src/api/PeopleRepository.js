@@ -4,7 +4,7 @@ export const PeopleRepository = (function () {
 
     const collectionName = "people";
 
-    const getFilm = (docRef) => {
+    const getDocument = (docRef) => {
         return docRef.get()
             .then(doc => {
                 return Promise.resolve({id: doc.id, ...doc.data()})
@@ -20,15 +20,24 @@ export const PeopleRepository = (function () {
                     people.forEach(person => {
                         peoplePromises.push(new Promise((resolve, reject) => {
                             if (person.films) {
-                                let filmsPromises = person.films.map(getFilm);
+                                let filmsPromises = person.films.map(getDocument);
                                 Promise.all(filmsPromises)
                                     .then(films => {
                                         console.log(films);
                                         person.films = films;
-                                        resolve(person)
+                                        if (person.homeworld) {
+                                            getDocument(person.homeworld)
+                                                .then(homeWorld => {
+                                                    person.homeworld = homeWorld;
+                                                    resolve(person);
+                                                })
+                                                .catch(reject)
+                                        }else {
+                                            resolve(person);
+                                        }
                                     })
                                     .catch(reject)
-                            }else {
+                            } else {
                                 resolve(person)
                             }
                         }));

@@ -45,6 +45,8 @@ class PeopleIndex extends React.Component {
                 {
                     !fetch ? <Loader/> :
                         <div className="container-fluid">
+                            <h1 className={"display-4 " + classNames["header--margin-top"]}>People</h1>
+                            <hr className="my-4"/>
                             {peopleCard.map((row, key) => (
                                 <div key={key} className={`row ${classNames["row--margin-top"]}`}>
                                     {
@@ -53,8 +55,9 @@ class PeopleIndex extends React.Component {
                                             <div key={key} className="col-md-4">
                                                 <Card
                                                     title={person.name}
-                                                    text={person.gender}
-                                                    anchor={{link: person.id, label: "Detalle"}}
+                                                    text={`My name is ${person.name}, I'm from ${person.homeworld.name}`}
+                                                    image={person.image}
+                                                    anchor={{link: person.id, label: "Detail"}}
                                                 />
                                             </div>
                                         ))
