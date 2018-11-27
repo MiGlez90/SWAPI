@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export const Card = ({title, text, anchor, image }) => {
     const defaultImage = image ? image : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1200px-Star_Wars_Logo.svg.png";
@@ -8,7 +9,8 @@ export const Card = ({title, text, anchor, image }) => {
             <div className="card-body">
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{text}</p>
-                {anchor && <a href={anchor.link} className="btn btn-starwars">{anchor.label}</a>}
+
+                {anchor && <Link to={anchor.link} className="btn btn-starwars">{anchor.label}</Link>}
             </div>
         </div>
     )

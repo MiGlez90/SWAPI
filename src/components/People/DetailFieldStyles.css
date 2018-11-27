@@ -1,0 +1,13 @@
+.b-display-field {
+    margin-bottom: 1em;
+}
+
+.b-display-field .b-display-field__name  {
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.b-display-field .b-display-field__value {
+    font-size: 1em;
+    font-weight: bold;
+}

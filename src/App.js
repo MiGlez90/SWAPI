@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PeopleIndex from "./components/People/PeopleIndex";
+import {Routes} from "./router/Routes";
 import './App.css';
 import {NavBar} from "./components/Common/NavBar/NavBar";
 
@@ -9,7 +9,7 @@ class App extends Component {
             <div>
                 <NavBar/>
                 <div className="b-main-container">
-                    <PeopleIndex/>
+                    <Routes/>
                 </div>
             </div>
         );
