@@ -4,7 +4,8 @@ export const FirestoreFunctions = (function () {
 	const get = (collectionName) => {
 		return new Promise((resolve, reject) => {
 			let data = [];
-			db.collection(collectionName).get()
+			db.collection(collectionName)
+			  .get()
 			  .then(snapshot => {
 				  snapshot.forEach(doc => {
 					  let document = doc.data();
