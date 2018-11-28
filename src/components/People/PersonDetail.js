@@ -44,7 +44,7 @@ class PersonDetail extends Component {
 										<h5 className="card-title">{person.name}</h5>
 										<div className="row">
 											<div className="col-4">
-												<img className="img-fluid img-thumbnail" src={person.image}
+												<img className="img-fluid img--highlighted" src={person.image}
 													 alt={person.name}/>
 											</div>
 											<div className="col-7 offset-1">
@@ -100,17 +100,32 @@ class PersonDetail extends Component {
 						{/*End row card */}
 						{/*Begin row card */}
 						<div className="row">
-							<div className="col-12">
+							<div className="col-6">
 								{/* Start card */}
-								<div className="card text-white bg-dark mb-3 card--margin">
+								<div className="card text-white bg-dark mb-3 card--margin card--height">
 									<div className="card-header">Films</div>
 									<div className="card-body">
-										<h5 className="card-title">He has participated in</h5>
 										<ul>
 											{
-												person.films
+												person.films.length > 0
 												? person.films.map((film, key) => <li key={key}>{film.title}</li>)
 												: <li>No films</li>
+											}
+										</ul>
+									</div>
+								</div>
+								{/*End card*/}
+							</div>
+							<div className="col-6">
+								{/* Start card */}
+								<div className="card text-white bg-dark mb-3 card--margin card--height">
+									<div className="card-header">Species</div>
+									<div className="card-body">
+										<ul>
+											{
+												person.species.length > 0
+												? person.species.map((specie, key) => <li key={key}>{specie.name}</li>)
+												: <li>No species</li>
 											}
 										</ul>
 									</div>
@@ -121,48 +136,33 @@ class PersonDetail extends Component {
 						{/*End row card */}
 						{/*Begin row card */}
 						<div className="row">
-							<div className="col-12">
+							<div className="col-6">
 								{/* Start card */}
-								<div className="card text-white bg-dark mb-3 card--margin">
-									<div className="card-header">Species</div>
-									<div className="card-body">
-										<h5 className="card-title">He belongs to this species</h5>
-										<ul>
-
-										</ul>
-									</div>
-								</div>
-								{/*End card*/}
-							</div>
-						</div>
-						{/*End row card */}
-						{/*Begin row card */}
-						<div className="row">
-							<div className="col-12">
-								{/* Start card */}
-								<div className="card text-white bg-dark mb-3 card--margin">
+								<div className="card text-white bg-dark mb-3 card--margin card--height">
 									<div className="card-header">Vehicles</div>
 									<div className="card-body">
-										<h5 className="card-title">He can drive</h5>
 										<ul>
-
+											{
+												person.vehicles.length > 0
+												? person.vehicles.map((vehicle, key) => <li key={key}>{vehicle.name}</li>)
+												: <li>No vehicles</li>
+											}
 										</ul>
 									</div>
 								</div>
 								{/*End card*/}
 							</div>
-						</div>
-						{/*End row card */}
-						{/*Begin row card */}
-						<div className="row">
-							<div className="col-12">
+							<div className="col-6">
 								{/* Start card */}
-								<div className="card text-white bg-dark mb-3 card--margin">
+								<div className="card text-white bg-dark mb-3 card--margin card--height">
 									<div className="card-header">Starships</div>
 									<div className="card-body">
-										<h5 className="card-title">He can pilot</h5>
 										<ul>
-
+											{
+												person.starships.length > 0
+												? person.starships.map((starship, key) => <li key={key}>{starship.name}</li>)
+												: <li>No starships</li>
+											}
 										</ul>
 									</div>
 								</div>
