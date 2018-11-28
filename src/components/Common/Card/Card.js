@@ -9,8 +9,7 @@ export const Card = ({title, text, anchor, image }) => {
             <div className="card-body">
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{text}</p>
-
-                {anchor && <Link to={anchor.link} className="btn btn-starwars">{anchor.label}</Link>}
+                {anchor && <Link to={anchor.link} className="btn btn-starwars text-uppercase">{anchor.label}</Link>}
             </div>
         </div>
     )

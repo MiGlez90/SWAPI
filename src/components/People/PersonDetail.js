@@ -16,13 +16,19 @@ class PersonDetail extends Component {
 
 	componentDidMount() {
 		const {id} = this.props.match.params;
-		PeopleRepository.getPerson(id)
-						.then(person => {
-							console.log(person);
-							this.setState({person, isFetched: true});
-						})
-						.catch(console.error)
+		PeopleRepository
+			.getPerson(id)
+			.then(person => {
+				console.log(person);
+				this.setState({person, isFetched: true});
+			})
+			.catch(console.error)
 	}
+
+	goToEditComponent = () => {
+		const {id} = this.props.match.params;
+		this.props.history.push("/people/edit/" + id)
+	};
 
 	render() {
 		const {isFetched, person} = this.state;
@@ -144,7 +150,8 @@ class PersonDetail extends Component {
 										<ul>
 											{
 												person.vehicles.length > 0
-												? person.vehicles.map((vehicle, key) => <li key={key}>{vehicle.name}</li>)
+												? person.vehicles.map((vehicle, key) => <li
+													key={key}>{vehicle.name}</li>)
 												: <li>No vehicles</li>
 											}
 										</ul>
@@ -160,7 +167,8 @@ class PersonDetail extends Component {
 										<ul>
 											{
 												person.starships.length > 0
-												? person.starships.map((starship, key) => <li key={key}>{starship.name}</li>)
+												? person.starships.map((starship, key) => <li
+													key={key}>{starship.name}</li>)
 												: <li>No starships</li>
 											}
 										</ul>
@@ -170,6 +178,30 @@ class PersonDetail extends Component {
 							</div>
 						</div>
 						{/*End row card */}
+						<div className="row">
+							<div className="col-12">
+								<div className="card text-white bg-dark mb-3 card--margin">
+									<div className="card-header">Actions</div>
+									<div className="card-body">
+										<div className="row">
+											<div className="col-8"/>
+											<div className="col-2">
+												<button
+													className="btn btn-danger btn--full-width text-uppercase">Delete
+												</button>
+											</div>
+											<div className="col-2">
+												<button
+													className="btn btn-info btn--full-width text-uppercase"
+													onClick={this.goToEditComponent}>
+													Edit
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				}
 			</Fragment>

@@ -13,3 +13,7 @@
 .b-rounded-image {
     border-radius: 50%;
 }
+
+.btn--full-width {
+    width: 100%;
+}

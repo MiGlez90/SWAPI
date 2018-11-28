@@ -1,13 +1,10 @@
 import React from 'react';
 import {PeopleRepository} from "../../api/PeopleRepository";
-import {Routes} from "../../router/Routes";
 import {SectionTitle} from "../Common/SectionTitle/SectionTitle";
-import AddPersonContainer from "./AddPersonContainer";
 import {Card} from "../Common/Card/Card";
 import {Loader} from "../Common/Loader/Loader";
 import {Utilities} from "../../utilities/Utilities";
 import classNames from "./PeopleStyles.module.css";
-import {Switch, Route} from "react-router-dom";
 
 class PeopleIndex extends React.Component {
 	constructor(props) {
@@ -19,30 +16,27 @@ class PeopleIndex extends React.Component {
 	}
 
 	componentDidMount() {
-		PeopleRepository.getPeople()
-						.then(people => {
-							console.log(people);
-							this.setState({people, fetch: true})
-						}).catch(e => {
+		PeopleRepository
+			.getPeople()
+			.then(people => {
+				console.log(people);
+				this.setState({people, fetch: true})
+			}).catch(e => {
 			console.error(e);
 		})
 	}
 
-	addPerson = (person) => {
-		this.setState(prevState => {
-			let people = prevState.people.slice();
-			people.push(person);
-			return {
-				people
-			}
-		});
+	goToAddPersonComponent = (event) => {
+		event.preventDefault();
+		this.props.history.push("people/add");
 	};
 
 	render() {
 		const {people = [], fetch} = this.state;
-
-		let peopleCard = Utilities.distributeDataInBsRows(people, 3);
-
+		const originalLength = people.length;
+		this.numberOfRows = 2;
+		let peopleCard = Utilities.distributeDataInBsRows(people, this.numberOfRows);
+		const mdCol = Math.ceil(originalLength / this.numberOfRows);
 		return (
 			<React.Fragment>
 				{
@@ -53,12 +47,21 @@ class PeopleIndex extends React.Component {
 								<SectionTitle title="People"/>
 							</div>
 						</div>
+						<div className="row">
+							<div className="col-12">
+								<button
+									onClick={this.goToAddPersonComponent}
+									className="btn btn-starwars text-uppercase">
+									Add New Person
+								</button>
+							</div>
+						</div>
 						{peopleCard.map((row, key) => (
 							<div key={key} className={`row ${classNames["row--margin-top"]}`}>
 								{
 									row.map((person, key) => (
 										person &&
-										<div key={key} className="col-md-4">
+										<div key={key} className={"col-md-" + mdCol}>
 											<Card
 												title={person.name}
 												text={`My name is ${person.name}, I'm from ${person.homeworld.name}`}

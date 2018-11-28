@@ -27,56 +27,35 @@ class AddPersonContainer extends Component {
 	}
 
 	componentDidMount() {
-		PlanetsRepository.getPlanets()
-						 .then(planets => {
-							 let person = Object.assign({}, this.state.person);
-							 person.homeworld = planets[0].id;
-							 this.setState({planets, person});
-						 })
-						 .catch(console.error)
+		PlanetsRepository
+			.getPlanets()
+			.then(planets => {
+				let person = Object.assign({}, this.state.person);
+				person.homeworld = planets[0].id;
+				this.setState({planets, person});
+			})
+			.catch(console.error)
 	}
 
-	// temp = () => {
-	//     let results = response;
-	//
-	//     const promises = [];
-	//     for (let doc of results) {
-	//         doc.films = doc.films.map(film => db.doc(film));
-	//         doc.species = doc.species.map(specie => db.doc(specie));
-	//         doc.vehicles = doc.vehicles.map(vehicle => db.doc(vehicle));
-	//         doc.starships = doc.starships.map(starship => db.doc(starship));
-	//         doc.homeworld = db.doc(doc.homeworld);
-	//         promises.push(FirestoreFunctions.put("people", doc.id, doc));
-	//     }
-	//
-	//     Promise.all(promises).then(result => console.log(result)).catch(e => console.error(e))
-	// };
+	goBackToHistory = () => {
+		this.props.history.goBack()
+	};
 
 	onSubmit = (e) => {
 		e.preventDefault();
+		// @TODO Guardar referencia y no objeto de homeworld
 		let person = JSON.parse(JSON.stringify(this.state.person));
 		person.homeworld = this.state.planets.filter(planet => planet.id === person.homeworld)[0];
-		PeopleRepository.addPerson(person)
-						.then((person) => {
-							console.log(person);
-							this.props.addPerson(person);
-						})
-						.catch(error => {
-							console.error(error);
-						});
-
-		// let results = [];
-		//
-		// const promises = [];
-		// for(let doc of results){
-		//     promises.push(addPerson(doc))
-		// }
-		//
-		// Promise.all(promises).then( result => console.log(result)).catch(e => console.error(e))
-
-		// e.preventDefault();
-		// this.temp();
-
+		console.log(person);
+		PeopleRepository
+			.addPerson(person)
+			.then((person) => {
+				console.log(person);
+				this.props.addPerson(person);
+			})
+			.catch(error => {
+				console.error(error);
+			});
 	};
 
 	onChange = (event) => {
@@ -97,11 +76,15 @@ class AddPersonContainer extends Component {
 	render() {
 		const {person, planets = []} = this.state;
 		const planetsOptions = planets.map(planet => ({value: planet.id, label: planet.name}));
+		const {id} = this.props.match.params;
+		const sectionTitle = !id ? "Add new person" : "Edit person";
+		const submitButton = !id ? "Save" : "Edit";
+		const labels = {sectionTitle, submitButton};
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="col-md-12">
-						<SectionTitle title="Add new person"/>
+						<SectionTitle title={labels.sectionTitle}/>
 					</div>
 				</div>
 				<form onSubmit={this.onSubmit}>
@@ -229,10 +212,19 @@ class AddPersonContainer extends Component {
 					<div className="row row--margin-top">
 						<div className="col-md-6"/>
 						<div className="col-3">
-							<button type="submit" className="btn btn-block btn-starwars">Cancel</button>
+							<button
+								type="submit"
+								className="btn btn-block btn-starwars text-uppercase"
+								onClick={this.goBackToHistory}>
+								Cancel
+							</button>
 						</div>
 						<div className="col-3">
-							<button type="submit" className="btn btn-block btn-starwars">Save</button>
+							<button
+								type="submit"
+								className="btn btn-block btn-starwars text-uppercase">
+								{labels.submitButton}
+							</button>
 						</div>
 					</div>
 				</form>
