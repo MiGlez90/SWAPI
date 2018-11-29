@@ -1,0 +1,23 @@
+.b-404-page {
+    background-image: url("https://images-eds-ssl.xboxlive.com/image?url=8Oaj9Ryq1G1_p3lLnXlsaZgGzAie6Mnu24_PawYuDYIoH77pJ.X5Z.MqQPibUVTc08YRQErEb.l.2UGxn4Ony7oGldsOQTT4fdBMvsdSSo.TqkXaree2yJubdYCwTL1LFAy_iGuZdTftOhwRNX7xd58elCN7NnyFfwKb32F6d2tH3XRuFrx8O1O4HjIu.Qx87pyuZIcXDGnhnPGFjOTwFSrfCIoLk7CQxJs5oek.mFQ-&h=1080&w=1920&format=jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 56px);
+}
+
+.b-404-message {
+    margin-top: calc(45% - 56px);
+    align-self: center;
+    color: white;
+}
+.b-404-message__title {
+    font-size: 14em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.b-404-message__text {
+    font-size: 4em;
+    margin: 0;
+}
+

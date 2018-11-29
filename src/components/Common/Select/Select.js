@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 
 export const Select = ({label, options = [],rootStyle, ...otherProps}) => (
     <div className="input-group mb-3" style={rootStyle}>

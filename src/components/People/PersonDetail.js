@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from "react";
 import {PeopleRepository} from "../../api/PeopleRepository";
 import {Loader} from "../Common/Loader/Loader";
-import {SectionTitle} from "../Common/SectionTitle/SectionTitle";
 import {DetailField} from "./DetailField";
 import "./PersonDetailStyles.css";
 
@@ -30,6 +29,26 @@ class PersonDetail extends Component {
 		this.props.history.push("/people/edit/" + id)
 	};
 
+	deletePerson = () => {
+		const isSure = window.confirm("Are you sure you want to delete it?");
+		if (isSure) {
+			const id = (this.state.person.id);
+			PeopleRepository
+				.removePerson(id)
+				.then(response => {
+					alert(response);
+					this.props.history.push("/people/")
+				})
+				.catch(error => {
+					console.error(error);
+					alert("Opps something was wrong");
+					this.props.history.push("/people/")
+				})
+
+		}
+
+	};
+
 	render() {
 		const {isFetched, person} = this.state;
 		return (
@@ -47,7 +66,7 @@ class PersonDetail extends Component {
 								<div className="card text-white bg-dark mb-3 card--margin">
 									<div className="card-header">Personal Information</div>
 									<div className="card-body">
-										<h5 className="card-title">{person.name}</h5>
+										<h5 className="card-title">{person.name} from {person.homeworld.name}</h5>
 										<div className="row">
 											<div className="col-4">
 												<img className="img-fluid img--highlighted" src={person.image}
@@ -187,7 +206,9 @@ class PersonDetail extends Component {
 											<div className="col-8"/>
 											<div className="col-2">
 												<button
-													className="btn btn-danger btn--full-width text-uppercase">Delete
+													className="btn btn-danger btn--full-width text-uppercase"
+													onClick={this.deletePerson}>
+													Delete
 												</button>
 											</div>
 											<div className="col-2">

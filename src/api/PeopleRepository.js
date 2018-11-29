@@ -60,11 +60,11 @@ export const PeopleRepository = (function () {
 	const getMoreInfo = (document) => {
 		return new Promise((resolve, reject) => {
 			let personPromises = [];
-			personPromises.push( getFilms(document) );
-			personPromises.push( getHomeWorld(document) );
-			personPromises.push( getSpecies(document) );
-			personPromises.push( getStarships(document) );
-			personPromises.push( getVehicles(document) );
+			personPromises.push(getFilms(document));
+			personPromises.push(getHomeWorld(document));
+			personPromises.push(getSpecies(document));
+			personPromises.push(getStarships(document));
+			personPromises.push(getVehicles(document));
 			return Promise
 				.all(personPromises)
 				.then(values => {
@@ -76,7 +76,7 @@ export const PeopleRepository = (function () {
 						starships: values["3"],
 						vehicles: values["4"]
 					};
-					console.log(person);
+					// console.log(person);
 					resolve(person)
 				})
 				.catch((e) => reject(e))
@@ -96,7 +96,7 @@ export const PeopleRepository = (function () {
 					return Promise
 						.all(peoplePromises)
 						.then(people => {
-							console.log(people);
+							// console.log(people);
 							return Promise.resolve(people);
 						})
 						.catch((e) => Promise.reject(e))
@@ -114,6 +114,25 @@ export const PeopleRepository = (function () {
 			.catch(console.error);
 	};
 
+
+	// const getRawMoreInfo = (person) => {
+	// 	person.films = person.films.map(film => film.id);
+	// 	person.homeworld = person.homeworld.id;
+	// 	person.species = person.species.map(specie => specie.id);
+	// 	person.starships = person.starships.map(starship => starship.id);
+	// 	person.vehicles = person.vehicles.map(vehicle => vehicle.id);
+	// 	return Promise.resolve(person);
+	// };
+
+	const getRawPerson = (idPerson) => {
+		return FirestoreFunctions
+			.getById(collectionName, idPerson)
+			.then(document => {
+				return Promise.resolve(document)
+			})
+			.catch(error => Promise.reject(error));
+	};
+
 	const addPerson = (document) => {
 		return FirestoreFunctions.add(collectionName, document);
 	};
@@ -122,10 +141,16 @@ export const PeopleRepository = (function () {
 		return FirestoreFunctions.patch(collectionName, idPerson, document);
 	};
 
+	const removePerson = (idPerson) => {
+		return FirestoreFunctions.remove(collectionName, idPerson);
+	};
+
 	return {
 		getPeople,
 		getPerson,
 		addPerson,
-		updatePerson
+		updatePerson,
+		getRawPerson,
+		removePerson
 	}
 })();

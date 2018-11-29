@@ -65,15 +65,7 @@ export const FirestoreFunctions = (function () {
 	};
 
 	const patch = (collectionName, id, document) => {
-		return new Promise((resolve, reject) => {
-			db.collection(collectionName).doc(id).update(document)
-			  .then(function () {
-				  resolve("Document successfully updated!");
-			  })
-			  .catch(function (error) {
-				  reject(error);
-			  });
-		});
+		return db.collection(collectionName).doc(id).update(document);
 	};
 
 	const remove = (collectionName, id) => {
